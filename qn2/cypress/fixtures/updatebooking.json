@@ -1,0 +1,9 @@
+{"firstname" : "anne",
+"lastname" : "Martha",
+"totalprice" : 200,
+"depositpaid" : true,
+"bookingdates" : {
+    "checkin" : "2022-11-01",
+    "checkout" : "2012-12-01"
+                    },
+"additionalneeds" : "supper"}
