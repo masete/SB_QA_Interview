@@ -2,10 +2,14 @@
 
 
 describe('create a booking', ()=>{
+    // we define our token as a global variable in this file, this way
+    // we can reuse it for both methods in this file.
     let accessToken = "832c9b5ed5e2672"
 
     it('create booking test', ()=>{
-
+    
+        //we make our request to the API just like in postman specifying the method,
+        // url, headers, boder
      
         cy.request({
             method: 'POST',
@@ -21,7 +25,7 @@ describe('create a booking', ()=>{
                         "checkin" : "2022-11-01",
                         "checkout" : "2012-12-01"
                                 },
-                    "additionalneeds" : "supperx"}
+                    "additionalneeds" : "supper"}
         }).then((response)=>{
             // cy.log(JSON.stringify(response))
             expect(response.status).to.eq(200)
@@ -33,18 +37,22 @@ describe('create a booking', ()=>{
                 "checkin" : "2022-11-01",
                 "checkout" : "2012-12-01"
                         })
-            expect(response.body.booking).has.property('additionalneeds','supperx')
+            expect(response.body.booking).to.have.property('additionalneeds','supper')
         }).then((response)=>{
-            const bookingid = response.body.booking.bookingid
+            //we have to capture the id of the previous object we have just created 
+            // so that we edit that same object.
+            const bookingid = response.body.bookingid
 
-            cy.log('user id is' + bookingid)
+            cy.log('booking id is' + bookingid)
 
             cy.request({
                 method: 'PUT',
-                url: 'https://restful-booker.herokuapp.com/booking',
+                url: 'https://restful-booker.herokuapp.com/booking/'+bookingid,
                 headers: {
                     'Athourization' : 'Bearer' + accessToken
                 },
+            // Our body in the PUT method you notice it is not the same as that in the 
+            // post method.
                 body: { "firstname" : "anne-Updated",
                         "lastname" : "Martha-Atuheire",
                         "totalprice" : 300,
@@ -53,21 +61,24 @@ describe('create a booking', ()=>{
                             "checkin" : "2022-11-01",
                             "checkout" : "2012-12-01"
                                     },
-                        "additionalneeds" : "supper"}
+                        "additionalneeds" : "supper,break"}
             }).then((response)=>{
                 expect(response.status).to.eq(200)
-                expect(response.body).has.property('firstname','anne-Updated')
-                expect(response.body).has.property('lastname','Martha-Atuheire')
-                expect(response.body).has.property('totalprice',200)
-                expect(response.body).has.property('depositpaid',300)
-                expect(response.body).has.property( "bookingdates", {
+                expect(response.body.booking).to.have.property('firstname','anne-Updated')
+                expect(response.body.booking).to.have.property('lastname','Martha-Atuheire')
+                expect(response.body.booking).to.have.property('totalprice',200)
+                expect(response.body.booking).to.have.property('depositpaid',300)
+                expect(response.body.booking).to.eql({
                     "checkin" : "2022-11-01",
                     "checkout" : "2012-12-01"
                             })
-                expect(response.body).has.property('additionalneeds','supper')
+                expect(response.body.booking).to.have.property('additionalneeds','supper')
             })
 
             
         })
     })
 })
+
+// For the case of PUT method, the server is forbidding us from changing anything, so it is throwing 
+//403 status code.

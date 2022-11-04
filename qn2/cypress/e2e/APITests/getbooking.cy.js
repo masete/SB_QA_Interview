@@ -9,7 +9,7 @@ describe('get api bookings', ()=>{
 
         cy.request({
             method: 'GET',
-            url: 'https://restful-booker.herokuapp.com/booking/8580',
+            url: 'https://restful-booker.herokuapp.com/booking/7828',
             headers: {
                 'Athourization' : 'Bearer' + accessToken
             },
