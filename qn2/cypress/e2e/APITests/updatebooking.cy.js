@@ -80,5 +80,5 @@ describe('create a booking', ()=>{
     })
 })
 
-// For the case of PUT method, the server is forbidding us from changing anything, so it is throwing 
+// For the case of PUT method, the server is forbidding us from updating bookings anything, so it is throwing 
 //403 status code.

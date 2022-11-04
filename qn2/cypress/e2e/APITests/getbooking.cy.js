@@ -6,7 +6,8 @@ describe('get api bookings', ()=>{
     let accessToken = "832c9b5ed5e2672"
 
     it('get booking', ()=>{
-
+           //we make our request to the API just like in postman specifying the method,
+        // url, headers, boder
         cy.request({
             method: 'GET',
             url: 'https://restful-booker.herokuapp.com/booking/7828',
